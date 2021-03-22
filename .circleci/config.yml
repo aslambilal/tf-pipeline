@@ -26,13 +26,11 @@ jobs:
           name: terraform plan
           command: |
             terraform init -input=false
-            terraform plan -input=false -out="terraform-$CI_COMMIT_SHORT_SHA.plan"
-            tar -czf "terraform-$CI_COMMIT_SHORT_SHA.tar.gz" .terraform
+            terraform plan -out tfapply .
       - persist_to_workspace:
-          root: terraform
+          root: .
           paths:
-            - terraform-*.tar.gz
-            - terraform-*.plan
+            - .
 
   apply:
     executor: build-image
