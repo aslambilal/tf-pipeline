@@ -26,7 +26,7 @@ jobs:
           name: terraform plan
           command: |
             terraform init -input=false
-            terraform plan -input=false -out="terraform.plan"
+            terraform plan -input=false -out="terraform.plan" -detailed-exitcode
       - persist_to_workspace:
           root: .
           paths:
