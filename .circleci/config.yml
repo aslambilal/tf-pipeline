@@ -25,6 +25,7 @@ jobs:
       - run:
           name: terraform plan
           command: |
+            cd terraform
             terraform init -input=false
             terraform plan -out tfapply -var-file variables.tfvars
       - persist_to_workspace:
