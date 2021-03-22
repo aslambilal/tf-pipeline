@@ -1,0 +1,62 @@
+version: 2.1
+
+# orbs:
+#   terraform: circleci/terraform@1.3.1
+  
+executors:
+  build-image:
+    docker:
+      - image: google/cloud-sdk
+
+commands:
+  init_script:
+    steps:
+      - run:
+          name: Authenticate to Google
+          command: |
+            echo $GCLOUD_SERVICE_KEY | base64 -d > /tmp/gcloud-service-key.json
+
+jobs:
+  plan:
+    executor: build-image
+    steps:
+      - checkout
+      - init_script
+      - run:
+          name: terraform plan
+          command: |
+            terraform init -input=false
+            terraform plan -out tfapply -var-file variables.tfvars
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  apply:
+    executor: build-image
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: terraform apply
+          command: |
+            terraform apply -auto-approve tfapply
+
+
+workflows:
+  terraform_flow:
+    jobs:
+      - plan
+      - hold:
+          type: approval
+          requires:
+            - plan
+          filters:
+            branches:
+              ignore: master
+      - apply:
+          requires:
+            - hold
+          filters:
+            branches:
+              ignore: master
