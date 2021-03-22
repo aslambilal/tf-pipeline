@@ -6,7 +6,7 @@ version: 2.1
 executors:
   build-image:
     docker:
-      - image: google/cloud-sdk
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
 
 commands:
   init_script:
@@ -26,7 +26,7 @@ jobs:
           name: terraform plan
           command: |
             terraform init -input=false
-            terraform plan -out=path
+            terraform plan
       - persist_to_workspace:
           root: .
           paths:
