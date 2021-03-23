@@ -36,6 +36,8 @@ jobs:
   apply:
     executor: build-image
     steps:
+      - checkout
+      - init_script
       - attach_workspace:
           at: .
       - run:
