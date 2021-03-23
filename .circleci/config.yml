@@ -6,7 +6,7 @@ version: 2.1
 executors:
   build-image:
     docker:
-      - image: docker.mirror.hashicorp.services/hashicorp/terraform:0.12.29
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:0.13.0
 
 commands:
   init_script:
