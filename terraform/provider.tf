@@ -11,7 +11,7 @@ provider "google-beta" {
 }
 
 terraform {
-  required_version = "0.12.30"
+  required_version = "0.12.29"
 
   backend "gcs" {
     bucket = "123345-tf-dev-tfstate"
