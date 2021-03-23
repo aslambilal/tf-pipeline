@@ -39,7 +39,7 @@ jobs:
       - checkout
       - init_script
       - attach_workspace:
-          at: /root/project/terraform
+          at: terraform
       - run:
           name: terraform apply
           command: |
