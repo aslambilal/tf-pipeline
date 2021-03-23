@@ -1,7 +1,7 @@
 provider "google" {
   project = var.project_id
   region  = var.regions[0]
-  version = "3.31"
+  version = "3.45"
 }
 
 provider "google-beta" {
