@@ -44,20 +44,34 @@ jobs:
             terraform apply -auto-approve tfapply
 
 
+# workflows:
+#   terraform_flow:
+#     jobs:
+#       - plan
+#       - hold:
+#           type: approval
+#           requires:
+#             - plan
+#           filters:
+#             branches:
+#               ignore: master
+#       - apply:
+#           requires:
+#             - hold
+#           filters:
+#             branches:
+#               ignore: master
+
+
 workflows:
-  terraform_flow:
+  version: 2
+  plan_approve_apply:
     jobs:
       - plan
-      - hold:
+      - hold-apply:
           type: approval
           requires:
             - plan
-          filters:
-            branches:
-              ignore: master
       - apply:
           requires:
-            - hold
-          filters:
-            branches:
-              ignore: master
+            - hold-apply
