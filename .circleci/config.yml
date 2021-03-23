@@ -29,7 +29,7 @@ jobs:
             terraform init -input=false
             terraform plan -out tfapply -var-file terraform.tfvars
       - persist_to_workspace:
-          root: terraform
+          root: .
           paths:
             - .
 
@@ -37,7 +37,7 @@ jobs:
     executor: build-image
     steps:
       - attach_workspace:
-          at: /root/project/terraform
+          at: .
       - run:
           name: terraform apply
           command: |
